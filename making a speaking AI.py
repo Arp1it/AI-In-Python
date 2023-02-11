@@ -5,7 +5,7 @@ import webbrowser
 
 engine = pyttsx3.init('sapi5')
 voicess = engine.getProperty('voices')
-engine.setProperty('voice', voicess[0].id)
+engine.setProperty('voice', voicess[1].id)
 
 def speak(text):
     print(text)
@@ -20,7 +20,8 @@ def take_voice():
         try:
             r.adjust_for_ambient_noise(source, duration=1)
             audio = r.listen(source)
-            mytext = r.recognize_google(audio)
+            print("Recognizing...")
+            mytext = r.recognize_google(audio, language="en-in")
             mytext = mytext.lower()
             speak(f"You said: {mytext}")
 
@@ -34,11 +35,17 @@ openai.api_key = "your_api_key"
 
 while True:
     model_engine = "text-davinci-003"
-    mytex = take_voice()
-    print(mytex)
+
+    try:
+        mytex = take_voice()
+        print(mytex)
+    except:
+        speak("please say again sir...")
+        continue
+
     # promptt = input("Enter: ")
 
-    if mytex == 'exit' or mytex == 'quit':
+    if mytex == 'exit' or mytex == 'quit' or "bye" in mytex:
         speak("Thanks for giving a time sir")
         break
 
