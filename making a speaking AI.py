@@ -31,7 +31,7 @@ def take_voice():
         return mytext
 
 #get api from https://openai.com/api/
-openai.api_key = "your_api_key"
+openai.api_key = "enter_your_api_here"
 
 while True:
     model_engine = "text-davinci-003"
