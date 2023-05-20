@@ -109,19 +109,22 @@ if __name__ == "__main__":
             speak("Please say again sir.")
             continue
 
-        sites = [["youtube", "https://www.youtube.com/"], ["google", "https://www.google.com/"], ["wikipedia", "https://www.wikipedia.com/"]]
+        if "open web" in mytex:
+            sites = [["youtube", "https://www.youtube.com/"], ["google", "https://www.google.com/"], ["wikipedia", "https://www.wikipedia.com/"]]
 
-        for site in sites:
-            if f"open {site[0]}" in mytex:
-                speak(f"{site[0]} is openning...")
-                webbrowser.open(site[1])
+            for site in sites: # it run until it not in mytex
+                if f"open web {site[0]}" in mytex:
+                    speak(f"{site[0]} is openning...")
+                    webbrowser.open(site[1])
+            continue
 
-        s = ["downfall", "sound"]
-        for song in s:
-            if f"play music {song}" in mytex:
-                music_path = f"C:/Users/Windows/Music/{song}.mp3"
-                os.startfile(music_path)
-                continue
+        if "play music" in mytex:
+            s = ["downfall", "sound"]
+            for song in s: # it run until it not in mytex
+                if f"play music {song}" in mytex:
+                    music_path = f"C:/Users/Windows/Music/{song}.mp3"
+                    os.startfile(music_path)
+            continue
 
         if "the time" in mytex:
             strftime = datetime.datetime.now().strftime("%H:%M:%S")
