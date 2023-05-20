@@ -17,13 +17,14 @@ def chat(query):
     #get api from https://openai.com/api/
     openai.api_key = "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"
 
-    chatstr += f"User: {query}\n Jarvis: "
+    chatstr += f"User: {query}\nJarvis: "
 
     print("chatting...")
 
     try:
         completion = openai.Completion.create(engine="text-davinci-003", prompt=chatstr, max_tokens=1024, n=1, stop=None, temperature=0.7, frequency_penalty = 0, presence_penalty=0)
-    except:
+    except Exception as e:
+        print(e)
         speak("sorry for some reason i exit.")
         exit()
 
@@ -66,6 +67,7 @@ def take_voice():
 
 def ai(prompt):
     prompt = prompt.replace("using a i ", "")
+    prompt = prompt.replace("using ai ", "")
     # print(prompt)
 
     #get api from https://openai.com/api/
@@ -77,7 +79,8 @@ def ai(prompt):
 
     try:
         completion = openai.Completion.create(engine="text-davinci-003", prompt=prompt, max_tokens=1024, n=1, stop=None, temperature=0.7, frequency_penalty = 0, presence_penalty=0)
-    except:
+    except Exception as e:
+        print(e)
         speak("sorry for some reason i exit.")
         exit()
 
@@ -113,10 +116,12 @@ if __name__ == "__main__":
                 speak(f"{site[0]} is openning...")
                 webbrowser.open(site[1])
 
-        if "play music" in mytex:
-            music_path = "C:/Users/Windows/Music/downfall-21371.mp3"
-            os.startfile(music_path)
-            continue
+        s = ["downfall", "sound"]
+        for song in s:
+            if f"play music {song}" in mytex:
+                music_path = f"C:/Users/Windows/Music/{song}.mp3"
+                os.startfile(music_path)
+                continue
 
         if "the time" in mytex:
             strftime = datetime.datetime.now().strftime("%H:%M:%S")
@@ -134,7 +139,7 @@ if __name__ == "__main__":
                 speak("Thanks for giving a time sir.")
                 exit()
 
-        if "using a i" in mytex:
+        if "using a i" in mytex or "using ai":
             ai(mytex)
 
         if "reset your data" in mytex:
@@ -142,3 +147,5 @@ if __name__ == "__main__":
 
         else:
             chat(mytex)
+
+        # todo add news and weather saying usinfg apis.
